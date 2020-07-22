@@ -1,0 +1,20 @@
+﻿@{ 
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        @ViewBag.Start World(from the view)
+        <p> We' re going to have an exci ting party . <br />
+            (То do: sell i t better. Add pictures or something.)
+        </p>
+        <! создаем ссылку на странице на другое отображение(страницу html RsvpForm)>
+        <a asp-action="RsvpForm">RSVP NOW</a>
+    </div>
+</body>
+</html>

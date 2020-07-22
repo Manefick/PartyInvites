@@ -11,31 +11,29 @@ namespace PartyInvites.Controllers
 {
     public class HomeController : Controller
     {
-        public string index()
+        public ViewResult Index()
         {
-            return "Hello World";
+            int hour = DateTime.Now.Hour;
+            //ViewBag - передает даные в представление, кратакая форма записи if/else
+            ViewBag.Start = hour < 12 ? "Good Morning" : "Good Evening";
+            return View("MyView");
         }
-        //private readonly ILogger<HomeController> _logger;
-
-        //public HomeController(ILogger<HomeController> logger)
-        //{
-        //    _logger = logger;
-        //}
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
-        //public IActionResult Privacy()
-        //{
-        //    return View();
-        //}
-
-        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        //public IActionResult Error()
-        //{
-        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        //}
+        [HttpGet]
+        public ViewResult RsvpForm()
+        {
+            return View();
+        }
+        // происхходить сохранения обьекта GuestResponse в хранилище 
+        [HttpPost]
+        public ViewResult RsvpForm(GuestResponse guestResponse)
+        {
+            Repository.AddResponse(guestResponse);
+            // ВИЗУАЛИЗАЦИЯ  представления "Thanks" и передать ему обьект модели GuestResponse
+            return View("Thanks", guestResponse);
+        }
+        public ViewResult ListResponses()
+        {
+            return View(Repository.Responses.Where(r=>r.WillAtend==true));
+        }
     }
 }
