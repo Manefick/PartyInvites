@@ -27,9 +27,14 @@ namespace PartyInvites.Controllers
         [HttpPost]
         public ViewResult RsvpForm(GuestResponse guestResponse)
         {
-            Repository.AddResponse(guestResponse);
-            // ВИЗУАЛИЗАЦИЯ  представления "Thanks" и передать ему обьект модели GuestResponse
-            return View("Thanks", guestResponse);
+            if (ModelState.IsValid)
+            {
+                Repository.AddResponse(guestResponse);
+                // ВИЗУАЛИЗАЦИЯ  представления "Thanks" и передать ему обьект модели GuestResponse
+                return View("Thanks", guestResponse);
+            }
+            else
+                return View();
         }
         public ViewResult ListResponses()
         {
